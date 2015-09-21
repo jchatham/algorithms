@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Created by jeff on 9/15/15.
- * Insertion Sort for an integer array.
+ * Implementation of Insertion Sort.
  */
 
 
@@ -46,8 +46,20 @@ public class InsertionSort implements PairDataSorting {
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+
+        try {
+            if (args[1].equalsIgnoreCase("test")) {
+                insertionSort.test(input, sorted);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //ignore(normal case)
+        }
+
+    }
+
+    public void test(PairData[] input, PairData[] sorted) {
         Arrays.sort(input);
-        assert(Arrays.equals(input, sorted));
+        assert (Arrays.equals(input, sorted));
     }
 
 

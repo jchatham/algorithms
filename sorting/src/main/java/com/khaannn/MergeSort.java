@@ -4,8 +4,29 @@ import java.util.Arrays;
 
 /**
  * Created by jeff on 9/15/15.
+ * Implementation of Merge Sort.
  */
 public class MergeSort implements PairDataSorting {
+    int cores = Runtime.getRuntime().availableProcessors();
+
+    public PairData[] sortParallel(PairData[] a){
+        parallelMergeSortAlg(a, 0, a.length - 1);
+        return a;
+    }
+
+    public void parallelMergeSortAlg(PairData[] a, int low, int high){
+        if (low < high) {
+            int mid = (low + high) / 2;
+            Thread lowThread = new Thread(new parallelMergeSortAlg(a, low, mid));
+            MergeSortAlg(a, mid + 1, high);
+            merge(a, low, mid, high);
+        }
+
+    }
+
+
+
+
     public PairData[] sort(PairData[] a) {
         MergeSortAlg(a, 0, a.length - 1);
         return a;
@@ -86,12 +107,24 @@ public class MergeSort implements PairDataSorting {
 
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        InsertionSort insertionSort = new InsertionSort();
-        PairData[] sorted = insertionSort.sort(input);
+        MergeSort mergeSort = new MergeSort();
+        PairData[] sorted = mergeSort.sort(input);
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+
+        try {
+            if (args[1].equalsIgnoreCase("test")) {
+                mergeSort.test(input, sorted);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //ignore(normal case)
+        }
+
+    }
+
+    public void test(PairData[] input, PairData[] sorted) {
         Arrays.sort(input);
-        assert(Arrays.equals(input, sorted));
+        assert (Arrays.equals(input, sorted));
     }
 }

@@ -2,6 +2,7 @@ package com.khaannn;
 
 /**
  * Created by jeff on 9/15/15.
+ * Interface used by this package to standarize sorting.
  */
 public interface PairDataSorting {
     PairData[] sort(PairData[] a);

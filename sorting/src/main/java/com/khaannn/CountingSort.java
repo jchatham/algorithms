@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Created by chatham_j on 9/16/2015.
+ * Implements counting sort.
  */
 public class CountingSort implements PairDataSorting {
 
@@ -81,6 +82,18 @@ public class CountingSort implements PairDataSorting {
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+
+        try {
+            if (args[1].equalsIgnoreCase("test")) {
+                countingSort.test(input, sorted);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //ignore(normal case)
+        }
+
+    }
+
+    public void test(PairData[] input, PairData[] sorted) {
         Arrays.sort(input);
         assert (Arrays.equals(input, sorted));
     }

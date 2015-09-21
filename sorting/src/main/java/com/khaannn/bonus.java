@@ -8,12 +8,24 @@ import java.util.Arrays;
 public class bonus {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        jeffsort js = new jeffsort();
-        PairData[] sorted = js.sort(input);
+        jeffsort jeffsort = new jeffsort();
+        PairData[] sorted = jeffsort.sort(input);
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+
+        try {
+            if (args[1].equalsIgnoreCase("test")) {
+                jeffsort.test(input, sorted);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //ignore(normal case)
+        }
+
+    }
+
+    public void test(PairData[] input, PairData[] sorted) {
         Arrays.sort(input);
-        assert(Arrays.equals(input, sorted));
+        assert (Arrays.equals(input, sorted));
     }
 }
