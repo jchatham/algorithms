@@ -1,5 +1,7 @@
 package com.khaannn;
 
+import java.util.Arrays;
+
 /**
  * Created by jeff on 9/15/15.
  * Insertion Sort for an integer array.
@@ -27,7 +29,7 @@ public class InsertionSort implements PairDataSorting {
         PairData tmp;
         for(int i =0;  i<a.length;i++){
             j = i;
-            while (j > 0 && a[j - 1].getNum() > a[j].getNum()) {
+            while (j > 0 && a[j - 1].getKey() > a[j].getKey()) {
                 tmp = a[j];
                 a[j] = a[j-1];
                 a[j-1]= tmp;
@@ -40,10 +42,13 @@ public class InsertionSort implements PairDataSorting {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
         InsertionSort insertionSort = new InsertionSort();
-        input = insertionSort.sort(input);
-        for (PairData item : input) {
+        PairData[] sorted = insertionSort.sort(input);
+        for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+        Arrays.sort(input);
+        assert(Arrays.equals(input, sorted));
     }
+
 
 }

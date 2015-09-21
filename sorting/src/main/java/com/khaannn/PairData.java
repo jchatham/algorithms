@@ -4,15 +4,15 @@ package com.khaannn;
  * Created by jeff on 9/15/15.
  */
 public class PairData implements Comparable<PairData>{
-    private int num;
+    private int key;
     private String name;
 
-    public int getNum() {
-        return num;
+    public int getKey() {
+        return key;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setKey(int key) {
+        this.key = key;
     }
 
     public String getName() {
@@ -22,19 +22,19 @@ public class PairData implements Comparable<PairData>{
     public void setName(String name) {
         this.name = name;
     }
-    public PairData(int num, String name){
-        this.num = num;
+    public PairData(int key, String name){
+        this.key = key;
         this.name = name;
     }
     public PairData(){
     }
     public String toString(){
-        return num + " " + name;
+        return key + " " + name;
     }
     public int compareTo(PairData a){
-        if(this.num > a.getNum()){
+        if(this.key > a.getKey()){
             return 1;
-        } else if(this.num < a.getNum()){
+        } else if(this.key < a.getKey()){
             return -1;
         }
         //equals

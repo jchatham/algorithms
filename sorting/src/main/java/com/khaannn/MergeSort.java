@@ -1,5 +1,7 @@
 package com.khaannn;
 
+import java.util.Arrays;
+
 /**
  * Created by jeff on 9/15/15.
  */
@@ -64,7 +66,7 @@ public class MergeSort implements PairDataSorting {
         }
         int i = low, j = mid + 1, k = low;
         while (i <= mid && j <= high) {
-            if (tmp[i].getNum() <= tmp[j].getNum()) {
+            if (tmp[i].getKey() <= tmp[j].getKey()) {
                 a[k] = tmp[i];
                 i++;
             } else {
@@ -84,10 +86,12 @@ public class MergeSort implements PairDataSorting {
 
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        PairDataSorting mergeSort = new MergeSort();
-        input = mergeSort.sort(input);
-        for (PairData item : input) {
+        InsertionSort insertionSort = new InsertionSort();
+        PairData[] sorted = insertionSort.sort(input);
+        for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+        Arrays.sort(input);
+        assert(Arrays.equals(input, sorted));
     }
 }

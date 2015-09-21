@@ -1,12 +1,14 @@
 package com.khaannn;
 
+import java.util.Arrays;
+
 /**
  * Created by jeff on 9/17/15.
  */
 public class jeffsort {
     private PairData[] array;
     private int length;
-    private int maxVal;
+    private int k;
     private int minVal;
     private boolean isAscSorted = true;
     private boolean isDescSorted = true;
@@ -29,9 +31,9 @@ public class jeffsort {
             reverseArray();
             return array;
         }
-        if ((minVal - maxVal) < MAX_K_FOR_COUNTING_SORT) {
+        if ((minVal - k) < MAX_K_FOR_COUNTING_SORT) {
             CountingSort cs = new CountingSort();
-            return cs.countingSortHelper(array, minVal, maxVal);
+            return cs.countingSortHelper(array, k);
         } else {
             PairDataSorting ms = new MergeSort();
             return ms.sort(array);
@@ -49,32 +51,28 @@ public class jeffsort {
     }
 
     public void findData() {
-        maxVal = Integer.MIN_VALUE;
-        minVal = Integer.MAX_VALUE;
-        if (array[0].getNum() > array[length - 1].getNum()) {
+        k = Integer.MIN_VALUE;
+        if (array[0].getKey() > array[length - 1].getKey()) {
             isDescSorted = false;
         }
-        if (array[0].getNum() < array[length - 1].getNum()) {
+        if (array[0].getKey() < array[length - 1].getKey()) {
             isAscSorted = false;
         }
         int tmp;
-        //Walks array, finding the min/max vals and also if it's already sorted asc or desc.
-        for (int i = 0; i <= this.length; i++) {
-            tmp = array[i].getNum();
-            if (tmp > maxVal) {
-                maxVal = tmp;
-            }
-            if (tmp < minVal) {
-                minVal = tmp;
+        //Walks array, finding the min vals and also if it's already sorted asc or desc.
+        for (int i = 0; i < this.length; i++) {
+            tmp = array[i].getKey();
+            if (tmp > k) {
+                k = tmp;
             }
             if (i != 0) {
                 if (isDescSorted) {
-                    if (tmp > array[i - 1].getNum()) {
+                    if (tmp > array[i - 1].getKey()) {
                         isDescSorted = false;
                     }
                 }
                 if (isAscSorted) {
-                    if (tmp < array[i - 1].getNum()) {
+                    if (tmp < array[i - 1].getKey()) {
                         isAscSorted = false;
                     }
                 }
@@ -84,22 +82,13 @@ public class jeffsort {
 
     }
     public static void main(String[] args) {
+        PairData[] input = ReadFromTextFile.test(args[0]);
         jeffsort js = new jeffsort();
-
-        PairData[] pairData = new PairData[10];
-        pairData[0] = new PairData(-5,"jeff");
-        pairData[1] = new PairData(45464,"nibbles");
-        pairData[2] = new PairData(19,"john");
-        pairData[3] = new PairData(43,"kristen");
-        pairData[4] = new PairData(5,"kelli");
-        pairData[5] = new PairData(0,"alan");
-        pairData[6] = new PairData(-65,"jimmy");
-        pairData[7] = new PairData(-43,"champion");
-        pairData[8] = new PairData(325235,"sasha");
-        pairData[9] = new PairData(234523443,"robin");
-        pairData = js.sort(pairData);
-        for(PairData item : pairData){
+        PairData[] sorted = js.sort(input);
+        for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
+        Arrays.sort(input);
+        assert(Arrays.equals(input, sorted));
     }
 }
