@@ -42,7 +42,13 @@ public class InsertionSort implements PairDataSorting {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
         InsertionSort insertionSort = new InsertionSort();
-        PairData[] sorted = insertionSort.sort(input);
+
+        PairData[] sorted;
+        final long startTime = System.currentTimeMillis();
+        sorted = insertionSort.sort(input);
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Elapsed time in Milliseconds is " + (endTime - startTime));
+
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }

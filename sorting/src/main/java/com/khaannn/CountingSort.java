@@ -62,6 +62,8 @@ public class CountingSort implements PairDataSorting {
         for (int j = 0; j < n; j++) {
             counts[a[j].getKey()] = counts[a[j].getKey()] + 1;
         }
+
+
         for (int i = 1; i <= k; i++) {
             counts[i] = counts[i] + counts[i - 1];
         }
@@ -78,9 +80,14 @@ public class CountingSort implements PairDataSorting {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
         CountingSort countingSort = new CountingSort();
+
+        final long startTime = System.currentTimeMillis();
         PairData[] sorted = countingSort.sort(input);
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Elapsed time in Miliseconds is " + (endTime - startTime));
+
         for (PairData item : sorted) {
-            System.out.print(item + "\n");
+            //System.out.print(item + "\n");
         }
 
         try {

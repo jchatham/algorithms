@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class MergeSort implements PairDataSorting {
     int cores = Runtime.getRuntime().availableProcessors();
 
-    public PairData[] sortParallel(PairData[] a){
+  /*  public PairData[] sortParallel(PairData[] a){
         parallelMergeSortAlg(a, 0, a.length - 1);
         return a;
     }
@@ -22,13 +22,14 @@ public class MergeSort implements PairDataSorting {
             merge(a, low, mid, high);
         }
 
-    }
+    }*/
 
 
 
 
     public PairData[] sort(PairData[] a) {
-        MergeSortAlg(a, 0, a.length - 1);
+        PairData[] tmp = new PairData[a.length];
+        MergeSortAlg(a, tmp, 0, a.length - 1);
         return a;
     }
 
@@ -48,12 +49,12 @@ public class MergeSort implements PairDataSorting {
 
     }
 
-    private void MergeSortAlg(PairData[] a, int low, int high) {
+    private void MergeSortAlg(PairData[] a, PairData[] tmp, int low, int high) {
         if (low < high) {
             int mid = (low + high) / 2;
-            MergeSortAlg(a, low, mid);
-            MergeSortAlg(a, mid + 1, high);
-            merge(a, low, mid, high);
+            MergeSortAlg(a, tmp, low, mid);
+            MergeSortAlg(a, tmp, mid + 1, high);
+            merge(a, tmp, low, mid, high);
         }
     }
 
@@ -80,8 +81,7 @@ public class MergeSort implements PairDataSorting {
         }
     }
 
-    public void merge(PairData[] a, int low, int mid, int high) {
-        PairData[] tmp = new PairData[a.length];
+    public void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
         for (int i = low; i <= high; i++) {
             tmp[i] = a[i];
         }
@@ -108,10 +108,18 @@ public class MergeSort implements PairDataSorting {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
         MergeSort mergeSort = new MergeSort();
+
+        final long startTime = System.currentTimeMillis();
+        input = mergeSort.sort(input);
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Elapsed time in Miliseconds is " + (endTime - startTime));
+
+
         PairData[] sorted = mergeSort.sort(input);
         for (PairData item : sorted) {
-            System.out.print(item + "\n");
+            //System.out.print(item + "\n");
         }
+
 
         try {
             if (args[1].equalsIgnoreCase("test")) {
