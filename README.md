@@ -1,6 +1,6 @@
 Author: Jeff Chatham
 Implementation of CountingSort, InsertionSort, and MergeSort.
-Compile whole package(using jdk 1.8):  javac sorting/src/main/java/com/khaannn/sorting *.java
+Compile package(using jdk 1.8):  1) cd into java directory. 2)(Slashes dependent on platform) javac com\khaannn\sorting\*.java  3) Run any of the commands below (also from the java directory)
 Example usage:
 java com.khaannn.sorting.CountingSort pathOfFile
 java com.khaannn.sorting.InsertionSort pathOfFile
