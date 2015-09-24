@@ -1,4 +1,4 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.io.IOException;
 import java.nio.file.Files;

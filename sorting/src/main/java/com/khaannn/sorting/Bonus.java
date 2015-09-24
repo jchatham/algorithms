@@ -1,14 +1,14 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.util.Arrays;
 
 /**
  * Created by jeff on 9/16/15.
  */
-public class bonus {
+public class Bonus {
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        jeffsort jeffsort = new jeffsort();
+        JeffSort jeffsort = new JeffSort();
         PairData[] sorted = jeffsort.sort(input);
         for (PairData item : sorted) {
             System.out.print(item + "\n");

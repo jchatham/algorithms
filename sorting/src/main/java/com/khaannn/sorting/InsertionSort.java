@@ -1,4 +1,4 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.util.Arrays;
 
@@ -44,10 +44,9 @@ public class InsertionSort implements PairDataSorting {
         InsertionSort insertionSort = new InsertionSort();
 
         PairData[] sorted;
-        final long startTime = System.currentTimeMillis();
+        final long startTime = System.nanoTime();
         sorted = insertionSort.sort(input);
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Elapsed time in Milliseconds is " + (endTime - startTime));
+        final long endTime = System.nanoTime();
 
         for (PairData item : sorted) {
             System.out.print(item + "\n");
@@ -55,6 +54,7 @@ public class InsertionSort implements PairDataSorting {
 
         try {
             if (args[1].equalsIgnoreCase("test")) {
+                System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
                 insertionSort.test(input, sorted);
             }
         } catch (ArrayIndexOutOfBoundsException e) {

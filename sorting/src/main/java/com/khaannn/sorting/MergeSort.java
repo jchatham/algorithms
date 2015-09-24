@@ -1,4 +1,4 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.util.Arrays;
 
@@ -6,40 +6,25 @@ import java.util.Arrays;
  * Created by jeff on 9/15/15.
  * Implementation of Merge Sort.
  */
-public class MergeSort implements PairDataSorting {
-    int cores = Runtime.getRuntime().availableProcessors();
+public class MergeSort {
+    public void MergeSort(){
 
-  /*  public PairData[] sortParallel(PairData[] a){
-        parallelMergeSortAlg(a, 0, a.length - 1);
-        return a;
     }
 
-    public void parallelMergeSortAlg(PairData[] a, int low, int high){
-        if (low < high) {
-            int mid = (low + high) / 2;
-            Thread lowThread = new Thread(new parallelMergeSortAlg(a, low, mid));
-            MergeSortAlg(a, mid + 1, high);
-            merge(a, low, mid, high);
-        }
 
-    }*/
-
-
-
-
-    public PairData[] sort(PairData[] a) {
+    public static PairData[] sort(PairData[] a) {
         PairData[] tmp = new PairData[a.length];
         MergeSortAlg(a, tmp, 0, a.length - 1);
         return a;
     }
 
-    public int[] sort(int[] a) {
+    public static int[] sort(int[] a) {
         MergeSortAlg(a, 0, a.length - 1);
         return a;
     }
 
 
-    private void MergeSortAlg(int[] a, int low, int high) {
+    private static void MergeSortAlg(int[] a, int low, int high) {
         if (low < high) {
             int mid = (low + high) / 2;
             MergeSortAlg(a, low, mid);
@@ -49,7 +34,7 @@ public class MergeSort implements PairDataSorting {
 
     }
 
-    private void MergeSortAlg(PairData[] a, PairData[] tmp, int low, int high) {
+    private static void MergeSortAlg(PairData[] a, PairData[] tmp, int low, int high) {
         if (low < high) {
             int mid = (low + high) / 2;
             MergeSortAlg(a, tmp, low, mid);
@@ -58,7 +43,7 @@ public class MergeSort implements PairDataSorting {
         }
     }
 
-    public void merge(int[] inputArray, int low, int mid, int high) {
+    public static void merge(int[] inputArray, int low, int mid, int high) {
         int[] tmp = new int[inputArray.length];
         for (int i = low; i <= high; i++) {
             tmp[i] = inputArray[i];
@@ -81,7 +66,7 @@ public class MergeSort implements PairDataSorting {
         }
     }
 
-    public void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
+    public static void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
         for (int i = low; i <= high; i++) {
             tmp[i] = a[i];
         }
@@ -107,23 +92,22 @@ public class MergeSort implements PairDataSorting {
 
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        MergeSort mergeSort = new MergeSort();
 
-        final long startTime = System.currentTimeMillis();
-        input = mergeSort.sort(input);
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Elapsed time in Miliseconds is " + (endTime - startTime));
+        final long startTime = System.nanoTime();
+        MergeSort.sort(input);
+        final long endTime = System.nanoTime();
 
 
-        PairData[] sorted = mergeSort.sort(input);
-        for (PairData item : sorted) {
-            //System.out.print(item + "\n");
+        for (PairData item : input) {
+            System.out.print(item + "\n");
         }
 
 
         try {
             if (args[1].equalsIgnoreCase("test")) {
-                mergeSort.test(input, sorted);
+                System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
+                PairData[] input2 = ReadFromTextFile.test(args[0]);
+                MergeSort.test(input2, input);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             //ignore(normal case)
@@ -131,8 +115,9 @@ public class MergeSort implements PairDataSorting {
 
     }
 
-    public void test(PairData[] input, PairData[] sorted) {
+    public static void test(PairData[] input, PairData[] sorted) {
         Arrays.sort(input);
+        System.out.println(input.length + " " + sorted.length);
         assert (Arrays.equals(input, sorted));
     }
 }

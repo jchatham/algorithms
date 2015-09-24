@@ -1,15 +1,14 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.util.Arrays;
 
 /**
  * Created by jeff on 9/17/15.
  */
-public class jeffsort {
+public class JeffSort {
     private PairData[] array;
     private int length;
     private int k;
-    private int minVal;
     private boolean isAscSorted = true;
     private boolean isDescSorted = true;
 
@@ -31,12 +30,11 @@ public class jeffsort {
             reverseArray();
             return array;
         }
-        if ((minVal - k) < MAX_K_FOR_COUNTING_SORT) {
+        if (k <= MAX_K_FOR_COUNTING_SORT) {
             CountingSort cs = new CountingSort();
             return cs.countingSortHelper(array, k);
         } else {
-            PairDataSorting ms = new MergeSort();
-            return ms.sort(array);
+            return MergeSort.sort(array);
         }
     }
 
@@ -83,14 +81,19 @@ public class jeffsort {
     }
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
-        jeffsort jeffsort = new jeffsort();
+        JeffSort jeffsort = new JeffSort();
+
+        final long startTime = System.nanoTime();
         PairData[] sorted = jeffsort.sort(input);
+        final long endTime = System.nanoTime();
+
         for (PairData item : sorted) {
             System.out.print(item + "\n");
         }
 
         try {
             if (args[1].equalsIgnoreCase("test")) {
+                System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
                 jeffsort.test(input, sorted);
             }
         }catch (ArrayIndexOutOfBoundsException e){
@@ -104,3 +107,4 @@ public class jeffsort {
         assert (Arrays.equals(input, sorted));
     }
 }
+

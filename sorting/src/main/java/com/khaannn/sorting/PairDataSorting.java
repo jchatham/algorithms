@@ -1,4 +1,4 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 /**
  * Created by jeff on 9/15/15.

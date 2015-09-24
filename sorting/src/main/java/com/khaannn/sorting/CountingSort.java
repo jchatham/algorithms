@@ -1,4 +1,4 @@
-package com.khaannn;
+package com.khaannn.sorting;
 
 import java.util.Arrays;
 
@@ -81,17 +81,18 @@ public class CountingSort implements PairDataSorting {
         PairData[] input = ReadFromTextFile.test(args[0]);
         CountingSort countingSort = new CountingSort();
 
-        final long startTime = System.currentTimeMillis();
+        final long startTime = System.nanoTime();
         PairData[] sorted = countingSort.sort(input);
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Elapsed time in Miliseconds is " + (endTime - startTime));
+        final long endTime = System.nanoTime();
+
 
         for (PairData item : sorted) {
-            //System.out.print(item + "\n");
+            System.out.print(item + "\n");
         }
 
         try {
             if (args[1].equalsIgnoreCase("test")) {
+                System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
                 countingSort.test(input, sorted);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
