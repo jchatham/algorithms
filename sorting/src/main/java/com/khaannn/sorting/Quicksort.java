@@ -1,0 +1,73 @@
+package com.khaannn.sorting;
+
+import java.util.Arrays;
+
+/**
+ * Created by chatham_j on 9/29/2015.
+ */
+public class Quicksort {
+
+    public void sort(Comparable[] a, int p, int r){
+        if (p < r){
+            int q = partition(a, p, r);
+            sort(a, p, q - 1);
+            sort(a, q + 1, r);
+
+        }
+    }
+
+    public int partition(Comparable[] a, int p, int r){
+        Comparable x = a[r];
+        int i = p - 1;
+        for(int j = p; j < r; j++){
+            if (a[j].compareTo(x) <= 0){
+                i++;
+                exchange(a,i,j);
+            }
+        }
+        exchange(a,i + 1,r);
+        return i + 1;
+    }
+
+
+    public void exchange(Object[] a, int i, int j){
+        Object tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
+
+
+
+    public static void main(String[] args) {
+        Quicksort quicksort = new Quicksort();
+        Integer [] input = {34,32094,0,234,2034,95439,985,5348,0,-4};
+
+        final long startTime = System.nanoTime();
+        quicksort.sort(input, 0, input.length - 1);
+        final long endTime = System.nanoTime();
+
+
+        for (int item : input) {
+            System.out.print(item + "\n");
+        }
+
+
+        try {
+            if (args[1].equalsIgnoreCase("test")) {
+                System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
+                Integer[] input2 = {34,32094,0,234,2034,95439,985,5348,0,-4};
+                Quicksort.test(input2, input);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //ignore(normal case)
+        }
+
+    }
+
+    public static void test(Integer[] input, Integer[] sorted) {
+        Arrays.sort(input);
+        System.out.println(input.length + " " + sorted.length);
+        assert (Arrays.equals(input, sorted));
+    }
+}
