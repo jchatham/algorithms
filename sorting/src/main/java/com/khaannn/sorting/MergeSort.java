@@ -8,6 +8,9 @@ import java.util.Arrays;
  */
 public class MergeSort {
     private int numberOfInversions = 0;
+    private PairData[] a;
+    private PairData[] left;
+    private PairData[] right;
     public void MergeSort(){
 
     }
@@ -20,7 +23,7 @@ public class MergeSort {
         this.numberOfInversions = numberOfInversions;
     }
 
-    public static PairData[] sort(PairData[] a) {
+    public PairData[] sort(PairData[] a) {
         PairData[] tmp = new PairData[a.length];
         MergeSortAlg(a, tmp, 0, a.length - 1);
         return a;
@@ -43,7 +46,7 @@ public class MergeSort {
 
     }
 
-    private static void MergeSortAlg(PairData[] a, PairData[] tmp, int low, int high) {
+    private void MergeSortAlg(PairData[] a, PairData[] tmp, int low, int high) {
         if (low < high) {
             int mid = (low + high) / 2;
             MergeSortAlg(a, tmp, low, mid);
@@ -77,7 +80,7 @@ public class MergeSort {
         this.numberOfInversions += inversionCount;
     }
 
-    public static void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
+    public void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
         for (int i = low; i <= high; i++) {
             tmp[i] = a[i];
         }
@@ -101,11 +104,56 @@ public class MergeSort {
     }
 
 
+    public PairData[] sort2(PairData[] a) {
+        this.left = new PairData[a.length + 1];
+        this.right = new PairData[a.length + 1];
+        this.a = a;
+        MergeSortAlg2(0, a.length - 1);
+        return a;
+    }
+
+    private void MergeSortAlg2(int low, int high) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            MergeSortAlg2(low, mid);
+            MergeSortAlg2(mid + 1, high);
+            merge2(low, mid, high);
+        }
+    }
+
+    public void merge2(int low, int mid, int high) {
+        int leftIndex = mid - low + 1;
+        int rightIndex = high - mid;
+        int i = 1, j = 1;
+        while(i <= leftIndex){
+            left[i] = a[low + i - 1];
+            i++;
+        }
+        while(j <= rightIndex){
+            right[j] = a[mid + j];
+            j++;
+        }
+        left[leftIndex + 1].setKey(Integer.MAX_VALUE);
+        right[rightIndex + 1].setKey(Integer.MAX_VALUE);
+        i = 0;
+        j = 0;
+        for(int k = low; k <= high; k++){
+            if(left[i].getKey() <= right[i].getKey()){
+                a[k] = left[i++];
+            } else {
+                a[k] = right[j++];
+            }
+        }
+
+    }
+
+
     public static void main(String[] args) {
         PairData[] input = ReadFromTextFile.test(args[0]);
 
         final long startTime = System.nanoTime();
-        MergeSort.sort(input);
+        MergeSort mergeSort = new MergeSort();
+        mergeSort.sort2(input);
         final long endTime = System.nanoTime();
 
 
@@ -118,7 +166,7 @@ public class MergeSort {
             if (args[1].equalsIgnoreCase("test")) {
                 System.out.println("Elapsed time in Nanoseconds is " + (endTime - startTime));
                 PairData[] input2 = ReadFromTextFile.test(args[0]);
-                MergeSort.test(input2, input);
+                mergeSort.test(input2, input);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             //ignore(normal case)

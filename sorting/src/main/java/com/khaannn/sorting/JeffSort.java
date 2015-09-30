@@ -34,7 +34,8 @@ public class JeffSort {
             CountingSort cs = new CountingSort();
             return cs.countingSortHelper(array, k);
         } else {
-            return MergeSort.sort(array);
+            MergeSort mergeSort = new MergeSort();
+            return mergeSort.sort(array);
         }
     }
 

@@ -76,7 +76,8 @@ public class TestExp2 {
 
 
             long startTime0 = System.currentTimeMillis();
-            MergeSort.sort(input);
+            MergeSort mergeSort = new MergeSort();
+            mergeSort.sort(input);
             long endTime0 = System.currentTimeMillis();
 
             System.out.println(te[i].getNameOfTheFile() + " -> " + (endTime - startTime) + " " + (endTime0 - startTime0) + " " + (endTime1 - startTime1) + " " + (endTime2 - startTime2));
