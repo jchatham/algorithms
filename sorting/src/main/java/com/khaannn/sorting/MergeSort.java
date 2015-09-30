@@ -7,10 +7,18 @@ import java.util.Arrays;
  * Implementation of Merge Sort.
  */
 public class MergeSort {
+    private int numberOfInversions = 0;
     public void MergeSort(){
 
     }
 
+    public int getNumberOfInversions() {
+        return numberOfInversions;
+    }
+
+    public void setNumberOfInversions(int numberOfInversions) {
+        this.numberOfInversions = numberOfInversions;
+    }
 
     public static PairData[] sort(PairData[] a) {
         PairData[] tmp = new PairData[a.length];
@@ -18,18 +26,19 @@ public class MergeSort {
         return a;
     }
 
-    public static int[] sort(int[] a) {
-        MergeSortAlg(a, 0, a.length - 1);
+    public int[] sort(int[] a) {
+        int[] tmp = new int[a.length];
+        MergeSortAlg(a, tmp, 0, a.length - 1);
         return a;
     }
 
 
-    private static void MergeSortAlg(int[] a, int low, int high) {
+    private void MergeSortAlg(int[] a, int[] tmp, int low, int high) {
         if (low < high) {
             int mid = (low + high) / 2;
-            MergeSortAlg(a, low, mid);
-            MergeSortAlg(a, mid + 1, high);
-            merge(a, low, mid, high);
+            MergeSortAlg(a, tmp, low, mid);
+            MergeSortAlg(a, tmp,  mid + 1, high);
+            merge(a, tmp, low, mid, high);
         }
 
     }
@@ -43,8 +52,8 @@ public class MergeSort {
         }
     }
 
-    public static void merge(int[] inputArray, int low, int mid, int high) {
-        int[] tmp = new int[inputArray.length];
+    public void merge(int[] inputArray, int[] tmp, int low, int mid, int high) {
+        int inversionCount = 0;
         for (int i = low; i <= high; i++) {
             tmp[i] = inputArray[i];
         }
@@ -57,6 +66,7 @@ public class MergeSort {
                 inputArray[k] = tmp[j];
                 j++;
             }
+            inversionCount += (mid - i + 1);
             k++;
         }
         while (i <= mid) {
@@ -64,6 +74,7 @@ public class MergeSort {
             k++;
             i++;
         }
+        this.numberOfInversions += inversionCount;
     }
 
     public static void merge(PairData[] a, PairData[] tmp, int low, int mid, int high) {
