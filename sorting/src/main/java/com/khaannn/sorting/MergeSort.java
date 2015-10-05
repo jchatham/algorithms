@@ -11,7 +11,8 @@ public class MergeSort {
     private PairData[] a;
     private PairData[] left;
     private PairData[] right;
-    public void MergeSort(){
+
+    public void MergeSort() {
 
     }
 
@@ -40,7 +41,7 @@ public class MergeSort {
         if (low < high) {
             int mid = (low + high) / 2;
             MergeSortAlg(a, tmp, low, mid);
-            MergeSortAlg(a, tmp,  mid + 1, high);
+            MergeSortAlg(a, tmp, mid + 1, high);
             merge(a, tmp, low, mid, high);
         }
 
@@ -124,25 +125,49 @@ public class MergeSort {
     public void merge2(int low, int mid, int high) {
         int leftIndex = mid - low + 1;
         int rightIndex = high - mid;
-        int i = 1, j = 1;
-        while(i <= leftIndex){
-            left[i] = a[low + i - 1];
+        int i = 0, j = 0;
+        while (i < leftIndex) {
+            left[i] = a[low + i];
             i++;
         }
-        while(j <= rightIndex){
-            right[j] = a[mid + j];
+        while (j < rightIndex) {
+            right[j] = a[mid + j + 1];
             j++;
         }
-        left[leftIndex + 1].setKey(Integer.MAX_VALUE);
-        right[rightIndex + 1].setKey(Integer.MAX_VALUE);
+
         i = 0;
         j = 0;
-        for(int k = low; k <= high; k++){
-            if(left[i].getKey() <= right[i].getKey()){
+        for (int k = low; k <= high; k++) {
+            if (i >= leftIndex) {
+                a[k] = right[j++];
+            } else if (j >= rightIndex) {
+                a[k] = left[i++];
+            } else if (left[i].getKey() <= right[j].getKey()) {
                 a[k] = left[i++];
             } else {
                 a[k] = right[j++];
             }
+        }
+
+    }
+
+    public void merge3(int low, int mid, int high) {
+        //copy to tmp array
+        for (int i = low; i <= high; i++) {
+            left[i] = a[i];
+        }
+
+        //i is index of low list, j is index of high list, k is index of low
+        for (int k = low, i = low, j = mid + 1; k <= high; k++) {
+
+            //case of no i's left
+            if (i > mid) {
+                a[k] = left[j++];
+            } //case of no j's left
+            else if (j > high) {
+                a[k] = left[i++];
+            }
+
         }
 
     }
@@ -175,8 +200,9 @@ public class MergeSort {
     }
 
     public static void test(PairData[] input, PairData[] sorted) {
-        Arrays.sort(input);
+        //Arrays.sort(input);
         System.out.println(input.length + " " + sorted.length);
+        //TODO: This doesn't seem to be working correctly.
         assert (Arrays.equals(input, sorted));
     }
 }
